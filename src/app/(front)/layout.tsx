@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
+// import "../globals.css";
 import AppHeader from "@/components/app/AppHerder";
-import { sarabun } from "../fonts";
+// import { sarabun } from "../fonts";
 
 // font
 // const geistSans = Geist({
@@ -26,14 +26,9 @@ export default function FrontLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={sarabun.className}
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <AppHeader />
-        {children}
-      </body>
-    </html>
+    <div>
+      <AppHeader />
+      {children}
+    </div>
   );
 }
