@@ -1,14 +1,16 @@
-import { mysqlTable, varchar, text, timestamp, boolean } from "drizzle-orm/mysql-core";
-            
+import { mysqlTable, varchar, text, timestamp, boolean, mysqlEnum } from "drizzle-orm/mysql-core";
+
+// npx drizzle-kit push เขียนเสร็จแล้ว run command นี้
 export const user = mysqlTable("user", {
-                    id: varchar("id", { length: 36 }).primaryKey(),
-                    name: text('name').notNull(),
- email: varchar('email', { length: 255 }).notNull().unique(),
- emailVerified: boolean('email_verified').notNull(),
- image: text('image'),
- createdAt: timestamp('created_at').notNull(),
- updatedAt: timestamp('updated_at').notNull()
-                });
+    id: varchar("id", { length: 36 }).primaryKey(),
+    name: text('name').notNull(),
+    email: varchar('email', { length: 255 }).notNull().unique(),
+    emailVerified: boolean('email_verified').notNull(),
+    image: text('image'),
+    role: mysqlEnum(['user', 'admin']).default('user'),
+    createdAt: timestamp('created_at').notNull(),
+    updatedAt: timestamp('updated_at').notNull(),
+});
 
 export const session = mysqlTable("session", {
                     id: varchar("id", { length: 36 }).primaryKey(),

@@ -51,7 +51,7 @@ const AppHeader = async () => {
 
                 {
                     session && <div className="flex gap-4">
-                        ยินดีต้อนรับ {session.user.name} ID: {session.user.id}
+                        ยินดีต้อนรับ {session.user.name} Role: {session.user.role}
                     </div>
                 }
 

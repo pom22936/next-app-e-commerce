@@ -8,7 +8,7 @@ const SignUpForm = () => {
     const router = useRouter()
     const handleSignUp = async () => {
         await authClient.signUp.email({
-            email: 'admin@gmail.com',
+            email: 'admin3@gmail.com',
             password: 'P@ssw0rd',
             name: 'admin admin'
         }, {

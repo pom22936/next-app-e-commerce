@@ -22,6 +22,23 @@ export const auth = betterAuth({
         requireEmailVerification: false, //defaults to true ยืนยันตัวตน auto ให้เปิด true
         minPasswordLength: 4
     },
+    user: { // อย่าลืมทำ client ด้วย
+        additionalFields: {      
+            role: {        
+                type: "string",        
+                required: false,        
+                defaultValue: "user",        
+                input: false, // don't allow user to set role      
+            }, 
+        },  
+    },
+    session: {
+        expiresIn: 60 * 60 * 24 * 7, // 7 days        
+        updateAge: 60 * 60 * 24 // 1 day (every 1 day the session expiration is updated)    
+    },
+    advanced: {
+        cookiePrefix: 'palm-app'
+    }
     // socialProviders: { 
     //     github: { 
     //         clientId: process.env.GITHUB_CLIENT_ID, 

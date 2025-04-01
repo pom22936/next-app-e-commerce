@@ -11,6 +11,7 @@ const connection = mysql.createConnection({
         port: Number(process.env.DB_PORT),
         keepAliveInitialDelay: 10000, // 0 by default. 10 วินาที
         enableKeepAlive: true, // false by default.
+        connectTimeout: 60000, 
     });
 
 const dbSingleton = async () => {
