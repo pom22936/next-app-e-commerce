@@ -76,7 +76,7 @@ export default function HomePage() {
                 <div className="mt-6 mb-16 flex gap-3">
                   <a
                     className="inline-flex justify-center gap-0.5 overflow-hidden rounded-full bg-zinc-900 px-3 py-1 text-sm/6 font-medium text-white transition hover:bg-zinc-700"
-                    href="/product"
+                    href="/products"
                   >
                     เลือกซื้อสินค้า
                     <svg
