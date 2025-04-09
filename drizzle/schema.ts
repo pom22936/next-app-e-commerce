@@ -1,4 +1,4 @@
-import { mysqlTable, primaryKey, varchar, text, timestamp, int, decimal, unique, mysqlEnum } from "drizzle-orm/mysql-core"
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, foreignKey, primaryKey, varchar, text, timestamp, int, decimal, mysqlEnum, unique } from "drizzle-orm/mysql-core"
 import { sql } from "drizzle-orm"
 
 export const account = mysqlTable("account", {
@@ -18,6 +18,19 @@ export const account = mysqlTable("account", {
 },
 (table) => [
 	primaryKey({ columns: [table.id], name: "account_id"}),
+]);
+
+export const order = mysqlTable("order", {
+	id: int().autoincrement().notNull(),
+	userId: varchar("user_id", { length: 36 }).notNull().references(() => user.id),
+	productId: int("product_id").notNull().references(() => product.id),
+	price: decimal({ precision: 10, scale: 2 }).notNull(),
+	qty: int({ unsigned: true }).notNull(),
+	status: mysqlEnum(['pending','paid','delivered']),
+	createdAt: timestamp("created_at", { mode: 'string' }).default(sql`(now())`),
+},
+(table) => [
+	primaryKey({ columns: [table.id], name: "order_id"}),
 ]);
 
 export const product = mysqlTable("product", {
@@ -61,9 +74,9 @@ export const user = mysqlTable("user", {
 	email: varchar({ length: 255 }).notNull(),
 	emailVerified: tinyint("email_verified").notNull(),
 	image: text(),
+	role: mysqlEnum(['user','admin']).default('user'),
 	createdAt: timestamp("created_at", { mode: 'string' }).notNull(),
 	updatedAt: timestamp("updated_at", { mode: 'string' }).notNull(),
-	role: mysqlEnum(['user','admin']).default('user'),
 },
 (table) => [
 	primaryKey({ columns: [table.id], name: "user_id"}),
