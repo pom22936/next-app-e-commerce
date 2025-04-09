@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { sarabun } from "../fonts";
 import { Toaster } from "@/components/ui/sonner"
+import DLayout from "./dashboard/components/DLayout";
 
 // font
 // const geistSans = Geist({
@@ -31,7 +32,9 @@ export default function RootBackLayout({
             className={sarabun.className}
             // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-            {children}
+                <DLayout>
+                    {children}
+                </DLayout>
             <Toaster richColors={true} />
         </body>
     </html>

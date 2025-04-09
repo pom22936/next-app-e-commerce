@@ -3,20 +3,20 @@
 import * as React from "react"
 import {
   IconCamera,
-  IconChartBar,
+  // IconChartBar,
   IconDashboard,
   IconDatabase,
   IconFileAi,
   IconFileDescription,
   IconFileWord,
-  IconFolder,
+  // IconFolder,
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
+  // IconUsers,
 } from "@tabler/icons-react"
 
 // import { NavDocuments } from "@/components/nav-documents"
@@ -43,29 +43,29 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
-      url: "#",
+      title: "Products",
+      url: "/dashboard/product",
       icon: IconListDetails,
     },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
+    // {
+    //   title: "Analytics",
+    //   url: "#",
+    //   icon: IconChartBar,
+    // },
+    // {
+    //   title: "Projects",
+    //   url: "#",
+    //   icon: IconFolder,
+    // },
+    // {
+    //   title: "Team",
+    //   url: "#",
+    //   icon: IconUsers,
+    // },
   ],
   navClouds: [
     {
