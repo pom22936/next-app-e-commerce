@@ -14,14 +14,16 @@ export const metadata = {
   title: 'My App',
 };
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
-  params: { locale },
+  params
 }: {
   children: ReactNode;
   params: { locale: string };
 }) {
-  const messages = useMessages();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const messages = await useMessages(); // ✅ ต้อง await แล้วใช้
+  const locale = params.locale;         // ✅ เข้าถึง params หลัง await ได้ปกติ
 
   return (
     <html lang={locale}>
