@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
+import nextIntl from 'next-intl/plugin';
+
+// 🔧 ใช้ plugin wrap config
+const withNextIntl = nextIntl();
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Your Next.js config here (ถ้ามี)
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

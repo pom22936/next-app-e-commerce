@@ -1,7 +1,9 @@
 import BooksPage from "./book/page";
+import { useTranslations } from 'next-intl';
 
 /* eslint-disable @next/next/no-html-link-for-pages */
 export default function HomePage() {
+    const t = useTranslations();
     return (
         <>
             <div className="relative flex h-full flex-col px-4 pt-14">
@@ -130,6 +132,7 @@ export default function HomePage() {
                     veritatis ex autem.
                     </p>
                     <BooksPage />
+                    <h1>{t('greeting')}</h1>
                 </div>
                 </article>
             </main>

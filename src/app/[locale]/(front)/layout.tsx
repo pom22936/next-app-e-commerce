@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import { sarabun } from "../fonts";
+import "../../globals.css";
+import { sarabun } from "../../fonts";
 import { Toaster } from "@/components/ui/sonner"
 import AppHeader from "@/components/app/AppHerder";
 

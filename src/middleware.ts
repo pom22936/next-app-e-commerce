@@ -1,41 +1,64 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { betterFetch } from "@better-fetch/fetch";
 import type { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
+import { locales, defaultLocale } from "@/lib/i18n";
 
 type Session = typeof auth.$Infer.Session;
 
-export async function middleware(request: NextRequest) {
-	const { data: session } = await betterFetch<Session>("/api/auth/get-session", {
-		baseURL: request.nextUrl.origin,
-		headers: {
-			cookie: request.headers.get("cookie") || "", // Forward the cookies from the request
-		},
-	});
-
-    if (!session) {
-        return NextResponse.redirect(new URL("/login", request.url));
-    } else if (session.user.role === 'user') {
-        return NextResponse.redirect(new URL("/", request.url));
-    }
-
-    // redirect to next route (/dashboard)
-    return NextResponse.next();
-
-	// if (!session) {
-	// 	return NextResponse.redirect(new URL("/login", request.url));
-	// } else if (session.user.role === 'user') {
-    //     return NextResponse.redirect(new URL("/", request.url));
-    // } else if (session && request.nextUrl.pathname === '/login') {
-    //     if (session.user.role === 'user') {
-    //         return NextResponse.redirect(new URL("/", request.url));
-    //     } else {
-    //         return NextResponse.redirect(new URL("/dashboard", request.url));
-    //     }
-    // }
-
-	// return NextResponse.next();
+function getLocale(pathname: string): string {
+  const locale = pathname.split("/")[1];
+  return locales.includes(locale as any) ? locale : defaultLocale;
 }
 
-export const config = { // ถ้าอยากทีละ path ['/context' , '/about', '/api/product/']
-	matcher: ["/dashboard/:path*"], // Apply middleware to specific routes ป้องกันทุก route ที่อยู่ภายใต้ dashboard
+export async function middleware(request: NextRequest) {
+  const locale = getLocale(request.nextUrl.pathname);
+
+  const { pathname } = request.nextUrl;
+
+  // ✅ Redirect "/" ไปยัง defaultLocale (เช่น "/th")
+  if (pathname === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}`;
+    return NextResponse.redirect(url);
+  }
+
+
+  if (!locales.includes(locale as any)) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}${pathname}`;
+    return NextResponse.redirect(url);
+  }
+
+  if (!locales.includes(locale as any)) {
+    // Redirect unknown locale to default
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}${request.nextUrl.pathname}`;
+    return NextResponse.redirect(url);
+  }
+
+  const { data: session } = await betterFetch<Session>("/api/auth/get-session", {
+    baseURL: request.nextUrl.origin,
+    headers: {
+      cookie: request.headers.get("cookie") || "",
+    },
+  });
+
+  const isDashboard = request.nextUrl.pathname.startsWith(`/${locale}/dashboard`);
+
+  if (isDashboard && !session) {
+    return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+  }
+
+  if (isDashboard && session?.user.role === "user") {
+    return NextResponse.redirect(new URL(`/${locale}/`, request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: [
+    "/((?!_next|favicon.ico|api|.*\\..*).*)", // Apply to all non-static/non-api paths
+  ],
 };
